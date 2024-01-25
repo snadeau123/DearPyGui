@@ -94,6 +94,8 @@ public:
 
     std::vector<mvUUID> getSelectedNodes() const;
     std::vector<mvUUID> getSelectedLinks() const;
+    void focusSelectedNode() const;
+    ImVec2 getNodeEditorPanning() const;
     void clearNodes() { _clearNodes = true; }
     void clearLinks() { _clearLinks = true; }
 

@@ -145,6 +145,25 @@ std::vector<mvUUID> mvNodeEditor::getSelectedNodes() const
     return result;
 }
 
+void mvNodeEditor::focusSelectedNode() const
+{
+    if (_selectedNodes.empty())
+        return;
+
+    // Focus on the first selected node
+    int firstSelectedNodeId = _selectedNodes[0];
+    ImNodes::EditorContextMoveToNode(firstSelectedNodeId);
+    return;
+}
+
+ImVec2 mvNodeEditor::getNodeEditorPanning() const
+{
+    // Get the current editor context's panning offset
+    ImVec2 panning = ImNodes::EditorContextGetPanning();
+    return panning;
+}
+
+
 std::vector<mvUUID> mvNodeEditor::getSelectedLinks() const
 {
     std::vector<mvUUID> result;

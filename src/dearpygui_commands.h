@@ -1010,6 +1010,76 @@ clear_selected_nodes(PyObject* self, PyObject* args, PyObject* kwargs)
 }
 
 static PyObject*
+focus_selected_node(PyObject* self, PyObject* args, PyObject* kwargs)
+{
+	PyObject* node_editor_raw;
+
+	if (!Parse((GetParsers())["focus_selected_node"], args, kwargs, __FUNCTION__, &node_editor_raw))
+		return ToPyBool(false);
+
+	std::lock_guard<std::recursive_mutex> lk(GContext->mutex);
+
+	mvUUID node_editor = GetIDFromPyObject(node_editor_raw);
+
+	auto anode_editor = GetItem(*GContext->itemRegistry, node_editor);
+	if (anode_editor == nullptr)
+	{
+		mvThrowPythonError(mvErrorCode::mvItemNotFound, "focus_selected_node",
+			"Item not found: " + std::to_string(node_editor), nullptr);
+		return GetPyNone();
+	}
+
+	if (anode_editor->type != mvAppItemType::mvNodeEditor)
+	{
+		mvThrowPythonError(mvErrorCode::mvIncompatibleType, "focus_selected_node",
+			"Incompatible type. Expected types include: mvNodeEditor", anode_editor);
+		return GetPyNone();
+	}
+
+	mvNodeEditor* editor = static_cast<mvNodeEditor*>(anode_editor);
+
+	editor->focusSelectedNode();
+
+	return GetPyNone();
+}
+
+static PyObject*
+get_node_editor_panning(PyObject* self, PyObject* args, PyObject* kwargs)
+{
+	PyObject* node_editor_raw;
+
+	if (!Parse((GetParsers())["get_node_editor_panning"], args, kwargs, __FUNCTION__, &node_editor_raw))
+		return ToPyBool(false);
+
+	std::lock_guard<std::recursive_mutex> lk(GContext->mutex);
+
+	mvUUID node_editor = GetIDFromPyObject(node_editor_raw);
+
+	auto anode_editor = GetItem(*GContext->itemRegistry, node_editor);
+	if (anode_editor == nullptr)
+	{
+		mvThrowPythonError(mvErrorCode::mvItemNotFound, "get_node_editor_panning",
+			"Item not found: " + std::to_string(node_editor), nullptr);
+		return GetPyNone();
+	}
+
+	if (anode_editor->type != mvAppItemType::mvNodeEditor)
+	{
+		mvThrowPythonError(mvErrorCode::mvIncompatibleType, "get_node_editor_panning",
+			"Incompatible type. Expected types include: mvNodeEditor", anode_editor);
+		return GetPyNone();
+	}
+
+	mvNodeEditor* editor = static_cast<mvNodeEditor*>(anode_editor);
+
+	ImVec2 panning = editor->getNodeEditorPanning();
+
+	return ToPyPair(panning.x, panning.y);
+}
+
+
+
+static PyObject*
 is_plot_queried(PyObject* self, PyObject* args, PyObject* kwargs)
 {
 	PyObject* plotraw;
