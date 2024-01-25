@@ -1567,6 +1567,43 @@ InsertParser_Block4(std::map<std::string, mvPythonParser>& parsers)
 		mvPythonParser parser = FinalizeParser(setup, args);
 		parsers.insert({ "clear_selected_nodes", parser });
 	}
+	
+	{
+		std::vector<mvPythonDataElement> args;
+		args.push_back({ mvPyDataType::UUID, "node_editor" });
+
+		mvPythonParserSetup setup;
+		setup.about = "Focus a node editor's selected nodes.";
+		setup.category = { "Node Editor", "App Item Operations" };
+
+		mvPythonParser parser = FinalizeParser(setup, args);
+		parsers.insert({ "focus_selected_node", parser });
+	}
+
+	{
+		std::vector<mvPythonDataElement> args;
+		args.push_back({ mvPyDataType::UUID, "node_editor" });
+
+		mvPythonParserSetup setup;
+		setup.about = "Focus a node editor's selected nodes.";
+		setup.category = { "Node Editor", "App Item Operations" };
+
+		mvPythonParser parser = FinalizeParser(setup, args);
+		parsers.insert({ "focus_selected_node", parser });
+	}
+
+	{
+		std::vector<mvPythonDataElement> args;
+		args.push_back({ mvPyDataType::UUID, "node_editor" });
+
+		mvPythonParserSetup setup;
+		setup.about = "Gets the current panning of a node editor.";
+		setup.category = { "Node Editor", "App Item Operations" };
+		setup.returnType = mvPyDataType::FloatList;
+
+		mvPythonParser parser = FinalizeParser(setup, args);
+		parsers.insert({ "get_node_editor_panning", parser });
+	}
 
 	//-----------------------------------------------------------------------------
 	// fonts

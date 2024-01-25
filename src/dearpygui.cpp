@@ -557,6 +557,8 @@ PyInit__dearpygui(void)
 	MV_ADD_COMMAND(get_selected_links);
 	MV_ADD_COMMAND(clear_selected_nodes);
 	MV_ADD_COMMAND(clear_selected_links);
+	MV_ADD_COMMAND(focus_selected_node);
+	MV_ADD_COMMAND(get_node_editor_panning);
 
 	// plots
 	MV_ADD_COMMAND(get_plot_query_rects);
